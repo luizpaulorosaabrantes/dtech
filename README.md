@@ -1,2 +1,1 @@
-# dtech
-Qt project to access ABS ssu 
+# Qt project to access ABS ssu 
