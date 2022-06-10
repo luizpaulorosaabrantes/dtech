@@ -177,6 +177,9 @@ void AbsEquipment::on_actutalPushButton_clicked()
         isCheckingPulse = false;
         ui->actutalPushButton->setText("Integração");
     }
+
+    lastPulseActive = 0;
+    lastTime = 0;
 }
 
 
@@ -598,32 +601,29 @@ void AbsEquipment::calcActiveDemandStatistics(int active, int seconds)
 {
     double cte = ui->cteDoubleSpinBox->value();
 
-    if ((seconds % 20) == 0) {
+    qWarning() << "secs " << seconds << " -- " << lastTime;
 
-        // Quando repos demadna
-        if (seconds < lastPulseActive) {
-           lastPulseActive = 0;
-        }
-
-        else {
-            int diffTime = seconds - lastTime;
-            int diffActive = active - lastPulseActive;
-            lastPulseActive = active;
-
-            if (diffTime > 0) {
-                qWarning() << diffTime << " -- "  << diffActive;
-                int inst = diffActive*900/diffTime;
-                int proj = active+(inst*(900-seconds)/900);
-                ui->demandaInst->setText(QString("inst: %1").arg(cte*inst));
-                ui->demandaProj->setText(QString("proj: %1").arg(cte*proj));
-            }
-        }
-
-        lastTime = seconds;
-
+    // Quando repos demadna
+    if (seconds < lastTime) {
+        lastPulseActive = 0;
     }
 
+    else if ((seconds - lastTime) >= 20) {
+        qWarning() << "analisando....";
 
+        int diffTime = seconds - lastTime;
+        int diffActive = active - lastPulseActive;
+        lastPulseActive = active;
+        lastTime = seconds;
+
+        if (diffTime > 0) {
+            qWarning() << diffTime << " -- "  << diffActive;
+            int inst = diffActive*900/diffTime;
+            int proj = active+(inst*(900-seconds)/900);
+            ui->demandaInst->setText(QString("inst: %1").arg(cte*inst));
+            ui->demandaProj->setText(QString("proj: %1").arg(cte*proj));
+        }
+    }
 
     ui->demandaAcc->setText(QString("acc: %1").arg(active*cte));
     ui->demandaMed->setText(QString("med: %1").arg(active*cte*900/seconds));
