@@ -111,6 +111,8 @@ private slots:
 
     void on_actionCODI_triggered();
 
+    void on_actionDesbloquear_ABS_triggered();
+
 private:
     void initActionsConnections();
 

@@ -385,3 +385,9 @@ void MainWindow::on_actionCODI_triggered()
     takeCentralWidget();
     setCentralWidget(m_abnt);
 }
+
+void MainWindow::on_actionDesbloquear_ABS_triggered()
+{
+    m_abs->unlockWriteCommands();
+}
+

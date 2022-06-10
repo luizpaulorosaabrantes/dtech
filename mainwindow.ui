@@ -37,7 +37,7 @@
    </widget>
    <widget class="QMenu" name="menuTools">
     <property name="title">
-     <string>Tools</string>
+     <string>Ferramentas</string>
     </property>
     <addaction name="actionConfigure"/>
     <addaction name="actionClear"/>
@@ -51,14 +51,15 @@
    </widget>
    <widget class="QMenu" name="menuEquipments">
     <property name="title">
-     <string>Equipments</string>
+     <string>Equipamentos</string>
     </property>
     <addaction name="actionABS"/>
+    <addaction name="actionDesbloquear_ABS"/>
     <addaction name="actionCODI"/>
    </widget>
    <widget class="QMenu" name="menuSocket">
     <property name="title">
-     <string>Socket</string>
+     <string>Conexão</string>
     </property>
     <addaction name="actionSocketConnect"/>
    </widget>
@@ -218,6 +219,11 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="actionDesbloquear_ABS">
+   <property name="text">
+    <string>Desbloquear ABS</string>
    </property>
   </action>
  </widget>
