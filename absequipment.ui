@@ -257,18 +257,12 @@
          <property name="text">
           <string>acc.: 100</string>
          </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
         </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_9">
          <property name="text">
           <string>med.: 100</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
@@ -277,21 +271,12 @@
          <property name="text">
           <string>inst.: 100</string>
          </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
         </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_11">
          <property name="text">
           <string>proj.: 100 </string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-         <property name="margin">
-          <number>0</number>
          </property>
         </widget>
        </item>
@@ -362,10 +347,7 @@
         <number>5</number>
        </property>
        <property name="singleStep">
-        <double>0.010000000000000</double>
-       </property>
-       <property name="stepType">
-        <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
+        <double>0.100000000000000</double>
        </property>
        <property name="value">
         <double>1.000000000000000</double>
