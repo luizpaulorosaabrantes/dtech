@@ -5,6 +5,7 @@
 #include <QModbusDataUnit>
 #include <QModbusDevice>
 #include <QSqlDatabase>
+#include <QTimer>
 
 #define MAX_ADD_INT16       65500
 #define MAC_BUFF_SIZE       32
@@ -48,6 +49,7 @@ public slots:
     void processModbusResponse();
     void processModbusErrorResponse(QModbusDevice::Error error);
     void processModbusResponseTcp(QModbusDataUnit data);
+    void unlockWriteCommands();
 
 private slots:
     void on_clockPushButton_clicked();
@@ -66,6 +68,8 @@ private slots:
     void on_updateClockButton_clicked();
 
     void on_orderComboBox_activated(int index);
+
+    void lockWriteCommands();
 
 signals:
     void sendReadRequest(const QModbusDataUnit &read, int serverAddress);
@@ -94,6 +98,7 @@ private:
     bool isDesdendOrder;
     int registersToRead;
     bool isCheckingPulse;
+    QTimer *timerLockWriteCmds = nullptr;
 };
 
 #endif // ABSEQUIPMENT_H

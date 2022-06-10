@@ -49,6 +49,8 @@ AbsEquipment::AbsEquipment(QWidget *parent) :
     startRegister = 0;
     isDesdendOrder = false;
     isCheckingPulse = false;
+
+    timerLockWriteCmds = new QTimer(this);
 }
 
 AbsEquipment::~AbsEquipment()
@@ -714,3 +716,21 @@ void AbsEquipment::on_orderComboBox_activated(int index)
         ui->finalSspinBox->setValue(ultimaDemanda);
     }
 }
+
+void AbsEquipment::unlockWriteCommands()
+{
+    ui->ereasePushButton->setEnabled(true);
+    ui->updateClockButton->setEnabled(true);
+
+    timerLockWriteCmds->singleShot(5000, this, SLOT(lockWriteCommands()));
+}
+
+
+void AbsEquipment::lockWriteCommands()
+{
+    ui->ereasePushButton->setEnabled(false);
+    ui->updateClockButton->setEnabled(false);
+}
+
+
+
