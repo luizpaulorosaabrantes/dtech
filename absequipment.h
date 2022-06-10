@@ -100,6 +100,7 @@ private:
     bool isCheckingPulse;
     int lastTime;
     int lastPulseActive;
+    int lastWindowsTime;
     QTimer *timerLockWriteCmds = nullptr;
 };
 

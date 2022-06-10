@@ -180,6 +180,7 @@ void AbsEquipment::on_actutalPushButton_clicked()
 
     lastPulseActive = 0;
     lastTime = 0;
+    lastWindowsTime = ui->janelaSpinBox->value();
 }
 
 
@@ -608,9 +609,10 @@ void AbsEquipment::calcActiveDemandStatistics(int active, int seconds)
         lastPulseActive = 0;
     }
 
-    else if ((seconds - lastTime) >= 20) {
+    else if ((seconds - lastTime) >= lastWindowsTime) {
         qWarning() << "analisando....";
 
+        lastWindowsTime = ui->janelaSpinBox->value();
         int diffTime = seconds - lastTime;
         int diffActive = active - lastPulseActive;
         lastPulseActive = active;
