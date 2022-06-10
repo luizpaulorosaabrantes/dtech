@@ -51,6 +51,11 @@ AbsEquipment::AbsEquipment(QWidget *parent) :
     isCheckingPulse = false;
 
     timerLockWriteCmds = new QTimer(this);
+
+    ui->demandaAcc->setText(QString("acc: %1").arg(0));
+    ui->demandaMed->setText(QString("med: %1").arg(0));
+    ui->demandaInst->setText(QString("inst: %1").arg(0));
+    ui->demandaProj->setText(QString("proj: %1").arg(0));
 }
 
 AbsEquipment::~AbsEquipment()
@@ -501,7 +506,7 @@ void AbsEquipment::processDemandOnline(const QModbusDataUnit unit)
     }
 
     QString stringInt = QString("Timer:%1, Protocolo:%2, Ufer:%3, Posto:%4, Hora: %5, Q:%6").
-            arg(timer).arg(protocol == 8 ? "Normal" : "Estenddido").arg(ufer).arg(posto).arg(hora).arg(quadrante);
+            arg(timer).arg(protocol == 8 ? "Normal" : "Estendido").arg(ufer).arg(posto).arg(hora).arg(quadrante);
 
     QString stringLast = QString("Ufer:%3, Posto:%4, Hora: %5 ").
             arg(lastUfer).arg(lastPosto).arg(lastHora);
@@ -516,6 +521,8 @@ void AbsEquipment::processDemandOnline(const QModbusDataUnit unit)
     ui->lastActiveLcdNumber->display(unit.value(16));
     ui->lastReactiveLcdNumber->display(unit.value(17));
     ui->lastFpLcdNumber->display(static_cast<double>(calcPowerFactor(unit.value(16),unit.value(17))));
+
+    calcActiveDemandStatistics(active,900 - nextD);
 
     qWarning() <<  QDateTime::currentDateTime().toString("yyyy-MM-ddTHH:mm:ss") << active << ":"
                 << reactive << " (" << nextD << ") " << quadrante;
@@ -585,6 +592,41 @@ float AbsEquipment::calcPowerFactor(int a, int r)
         return 1;
 
     return active/sqrt(active*active + reactive*reactive);
+}
+
+void AbsEquipment::calcActiveDemandStatistics(int active, int seconds)
+{
+    double cte = ui->cteDoubleSpinBox->value();
+
+    if ((seconds % 20) == 0) {
+
+        // Quando repos demadna
+        if (seconds < lastPulseActive) {
+           lastPulseActive = 0;
+        }
+
+        else {
+            int diffTime = seconds - lastTime;
+            int diffActive = active - lastPulseActive;
+            lastPulseActive = active;
+
+            if (diffTime > 0) {
+                qWarning() << diffTime << " -- "  << diffActive;
+                int inst = diffActive*900/diffTime;
+                int proj = active+(inst*(900-seconds)/900);
+                ui->demandaInst->setText(QString("inst: %1").arg(cte*inst));
+                ui->demandaProj->setText(QString("proj: %1").arg(cte*proj));
+            }
+        }
+
+        lastTime = seconds;
+
+    }
+
+
+
+    ui->demandaAcc->setText(QString("acc: %1").arg(active*cte));
+    ui->demandaMed->setText(QString("med: %1").arg(active*cte*900/seconds));
 }
 
 

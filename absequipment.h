@@ -84,7 +84,7 @@ private:
     void processClock(const QModbusDataUnit unit);
     int getPercentage(bool isAcend);
     float calcPowerFactor(int a, int r);
-
+    void calcActiveDemandStatistics(int active, int seconds);
 private:
     Ui::AbsEquipment *ui;
     QSqlTableModel *model;
@@ -98,6 +98,8 @@ private:
     bool isDesdendOrder;
     int registersToRead;
     bool isCheckingPulse;
+    int lastTime;
+    int lastPulseActive;
     QTimer *timerLockWriteCmds = nullptr;
 };
 

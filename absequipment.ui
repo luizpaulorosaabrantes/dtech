@@ -253,30 +253,45 @@
      <item row="6" column="2">
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
-        <widget class="QLabel" name="label_12">
+        <widget class="QLabel" name="demandaAcc">
          <property name="text">
           <string>acc.: 100</string>
          </property>
+         <property name="textFormat">
+          <enum>Qt::AutoText</enum>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label_9">
+        <widget class="QLabel" name="demandaMed">
          <property name="text">
           <string>med.: 100</string>
          </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_10">
-         <property name="text">
-          <string>inst.: 100</string>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label_11">
+        <widget class="QLabel" name="demandaInst">
+         <property name="text">
+          <string>inst.: 100</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="demandaProj">
          <property name="text">
           <string>proj.: 100 </string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
@@ -327,7 +342,7 @@
       </widget>
      </item>
      <item row="6" column="3">
-      <widget class="QDoubleSpinBox" name="doubleSpinBox">
+      <widget class="QDoubleSpinBox" name="cteDoubleSpinBox">
        <property name="locale">
         <locale language="Portuguese" country="Brazil"/>
        </property>
