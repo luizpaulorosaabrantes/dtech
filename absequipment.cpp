@@ -603,16 +603,23 @@ void AbsEquipment::calcActiveDemandStatistics(int active, int seconds)
     double cte = ui->cteDoubleSpinBox->value();
 
     qWarning() << "secs " << seconds << " -- " << lastTime;
+    int windowCount = (seconds - lastTime);
 
     // Quando repos demadna
     if (seconds < lastTime) {
         lastPulseActive = 0;
+        lastTime = 0;
+        ui->janelaProgressBar->setValue(0);
+        ui->demandaInst->setText(QString("inst: %1").arg(0));
+        ui->demandaProj->setText(QString("proj: %1").arg(0));
     }
 
-    else if ((seconds - lastTime) >= lastWindowsTime) {
+    else if (windowCount >= lastWindowsTime) {
         qWarning() << "analisando....";
-
         lastWindowsTime = ui->janelaSpinBox->value();
+        ui->janelaProgressBar->setMinimum(0);
+        ui->janelaProgressBar->setMaximum(lastWindowsTime);
+
         int diffTime = seconds - lastTime;
         int diffActive = active - lastPulseActive;
         lastPulseActive = active;
@@ -627,6 +634,7 @@ void AbsEquipment::calcActiveDemandStatistics(int active, int seconds)
         }
     }
 
+    ui->janelaProgressBar->setValue(windowCount);
     ui->demandaAcc->setText(QString("acc: %1").arg(active*cte));
     ui->demandaMed->setText(QString("med: %1").arg(active*cte*900/seconds));
 }
