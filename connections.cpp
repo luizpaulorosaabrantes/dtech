@@ -282,7 +282,7 @@ void Connections::on_enviarButton_clicked()
 void Connections::on_infoButton_clicked()
 {
     if (isConnected()) {
-        socket->write("extcmd=getinfo\r\n");
+        socket->write("extcmd=getinfo");
         socket->flush();
 
         qWarning() << "Enviou!!";
